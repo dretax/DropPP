@@ -42,12 +42,12 @@ namespace DropPP
             if (!Directory.Exists(ModuleFolder + "\\Tables"))
             {
                 Directory.CreateDirectory(ModuleFolder + "\\Tables");
-                ExtractTables(Tables);
             }
+            ExtractTables(Tables);
             
             foreach (var name in Tables.Keys)
             {				
-                IniParser table = new IniParser(ModuleFolder + "\\Tables\\" + name);
+                IniParser table = new IniParser(ModuleFolder + "\\Tables\\" + name + ".ini");
                 LootSpawnList realTable = Tables[name];
                 try
                 {
@@ -101,6 +101,12 @@ namespace DropPP
         {	
             foreach (var name in tbls.Keys)
             {
+                if (File.Exists(ModuleFolder + "\\Tables\\" + name))
+                {
+                    continue;
+                }
+
+                File.Create(ModuleFolder + "\\Tables\\" + name + ".ini").Dispose();
                 IniParser table = new IniParser(ModuleFolder + "\\Tables\\" + name);
                 table.AddSetting("TableSettings", "MinToSpawn", tbls[name].minPackagesToSpawn.ToString());
                 table.AddSetting("TableSettings", "MaxToSpawn", tbls[name].maxPackagesToSpawn.ToString());
