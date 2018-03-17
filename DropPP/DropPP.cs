@@ -101,13 +101,13 @@ namespace DropPP
         {	
             foreach (var name in tbls.Keys)
             {
-                if (File.Exists(ModuleFolder + "\\Tables\\" + name))
+                if (File.Exists(ModuleFolder + "\\Tables\\" + name + ".ini"))
                 {
                     continue;
                 }
 
                 File.Create(ModuleFolder + "\\Tables\\" + name + ".ini").Dispose();
-                IniParser table = new IniParser(ModuleFolder + "\\Tables\\" + name);
+                IniParser table = new IniParser(ModuleFolder + "\\Tables\\" + name + ".ini");
                 table.AddSetting("TableSettings", "MinToSpawn", tbls[name].minPackagesToSpawn.ToString());
                 table.AddSetting("TableSettings", "MaxToSpawn", tbls[name].maxPackagesToSpawn.ToString());
                 table.AddSetting("TableSettings", "DuplicatesAllowed", (!tbls[name].noDuplicates).ToString());
